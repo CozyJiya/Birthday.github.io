@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌀 Level 7: Dodge & Escape! 🌀</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: white;
+        }
+        canvas {
+            background: black;
+            display: block;
+            margin: auto;
+            border: 3px solid #fff;
+        }
+        #winScreen {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        button {
+            padding: 14px 28px;
+            border: none;
+            background-color: #e94560;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #ff2e63;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌀 Level 7: Dodge & Escape! 🌀</h1>
+    <p>Avoid falling obstacles and reach the goal!</p>
+    <p>use arrow to move!</p>
+    <canvas id="gameCanvas" width="600" height="400"></canvas>
+    
+    <div id="winScreen">
+        <h1>🎉 YOU SURVIVED! 🎉</h1>
+        <p>Great job! Now let's check out the next memory.</p>
+        <button onclick="goToMemory()">Next Memory ➡️</button>
+    </div>
+
+    <script>
+        let canvas = document.getElementById("gameCanvas");
+        let ctx = canvas.getContext("2d");
+
+        let playerImg = new Image();
+        playerImg.src = "file:///C:/Users/jiyar/Downloads/Char-removebg-preview.png"; // Replace with actual image URL
+
+        let obstacleImg = new Image();
+        obstacleImg.src = "https://i.pinimg.com/736x/c8/e9/38/c8e93858fc00a475cb7c8fb51bc9d844.jpg"; // Replace with actual image URL
+
+        let goalImg = new Image();
+        goalImg.src = "https://i.pinimg.com/736x/ef/29/a4/ef29a43692e0b3e756fe506c1dc10db1.jpg"; // Replace with actual image URL
+
+        let player = { x: 280, y: 350, width: 50, height: 50 };
+        let goal = { x: 280, y: 10, width: 50, height: 50 };
+
+        let obstacles = [];
+        let gameRunning = true;
+
+        function createObstacles() {
+            for (let i = 0; i < 5; i++) {
+                obstacles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * -200,
+                    width: 40,
+                    height: 40,
+                    speed: Math.random() * 3 + 1
+                });
+            }
+        }
+
+        function drawPlayer() {
+            ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
+        }
+
+        function drawGoal() {
+            ctx.drawImage(goalImg, goal.x, goal.y, goal.width, goal.height);
+        }
+
+        function drawObstacles() {
+            obstacles.forEach(obstacle => {
+                ctx.drawImage(obstacleImg, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+                obstacle.y += obstacle.speed;
+
+                if (obstacle.y > canvas.height) {
+                    obstacle.y = Math.random() * -200;
+                    obstacle.x = Math.random() * canvas.width;
+                }
+
+                if (
+                    player.x < obstacle.x + obstacle.width &&
+                    player.x + player.width > obstacle.x &&
+                    player.y < obstacle.y + obstacle.height &&
+                    player.y + player.height > obstacle.y
+                ) {
+                    gameOver();
+                }
+            });
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            alert("💀 Oops! You got hit! Try again!");
+            resetGame();
+        }
+
+        function resetGame() {
+            player.x = 280;
+            player.y = 350;
+            obstacles = [];
+            createObstacles();
+            gameRunning = true;
+            drawGame();
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (!gameRunning) return;
+
+            if (e.key === "ArrowLeft" && player.x > 0) player.x -= 20;
+            if (e.key === "ArrowRight" && player.x + player.width < canvas.width) player.x += 20;
+            if (e.key === "ArrowUp" && player.y > 0) player.y -= 20;
+            if (e.key === "ArrowDown" && player.y + player.height < canvas.height) player.y += 20;
+
+            if (
+                player.x < goal.x + goal.width &&
+                player.x + player.width > goal.x &&
+                player.y < goal.y + goal.height &&
+                player.y + player.height > goal.y
+            ) {
+                document.getElementById("winScreen").style.display = "block";
+                gameRunning = false;
+            }
+        });
+
+        function drawGame() {
+            if (!gameRunning) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPlayer();
+            drawGoal();
+            drawObstacles();
+            requestAnimationFrame(drawGame);
+        }
+
+        function goToMemory() {
+            window.location.href = "Memory7.html";
+        }
+
+        createObstacles();
+        drawGame();
+    </script>
+</body>
+</html>

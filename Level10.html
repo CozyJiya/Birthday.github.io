@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 10 - Memory Match</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #282c34;
+            color: white;
+        }
+        h1 {
+            color: #00ff99;
+        }
+        .game-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .card {
+            width: 100px;
+            height: 100px;
+            background-color: #444;
+            border-radius: 8px;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: 0.3s;
+            opacity: 0;
+        }
+        .card.flipped img {
+            opacity: 1;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .btn {
+            display: none;
+            margin-top: 20px;
+            background: #007BFF;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Level 10: Memory Match 🧠</h1>
+        <p>Match all the pairs as fast as you can!</p>
+        <div class="grid" id="grid"></div>
+        <p id="message"></p>
+        <a href="BirthdayPage.html" class="btn" id="allMemoriesBtn">📸 View All Memories</a>
+    </div>
+
+    <script>
+        const imagePaths = [
+            "file:///C:/Users/jiyar/Downloads/Me.jpg", "file:///C:/Users/jiyar/Downloads/Utkarsh.jpg", "file:///C:/Users/jiyar/Downloads/Him.jpg", "file:///C:/Users/jiyar/Downloads/Anuva.jpg",
+            "file:///C:/Users/jiyar/Downloads/Abishak.jpg", "file:///C:/Users/jiyar/Downloads/arryaan.jpg", "file:///C:/Users/jiyar/Downloads/girls.jpg", "file:///C:/Users/jiyar/Downloads/all%20stupid.jpg"
+        ];
+        
+        let cards = [...imagePaths, ...imagePaths]; // Duplicate for pairs
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        shuffle(cards);
+
+        const grid = document.getElementById("grid");
+
+        cards.forEach((imgSrc, index) => {
+            let card = document.createElement("div");
+            card.classList.add("card");
+            card.dataset.img = imgSrc;
+            card.dataset.index = index;
+
+            let img = document.createElement("img");
+            img.src = imgSrc;
+            card.appendChild(img);
+
+            card.addEventListener("click", flipCard);
+            grid.appendChild(card);
+        });
+
+        function flipCard() {
+            if (flippedCards.length < 2 && !this.classList.contains("flipped")) {
+                this.classList.add("flipped");
+                flippedCards.push(this);
+            }
+
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 500);
+            }
+        }
+
+        function checkMatch() {
+            if (flippedCards[0].dataset.img === flippedCards[1].dataset.img) {
+                matchedPairs++;
+                flippedCards = [];
+            } else {
+                flippedCards.forEach(card => card.classList.remove("flipped"));
+                flippedCards = [];
+            }
+
+            if (matchedPairs === imagePaths.length) {
+                document.getElementById("message").innerText = "🎉 You matched all pairs!";
+                document.getElementById("allMemoriesBtn").style.display = "inline-block";
+            }
+        }
+    </script>
+
+</body>
+</html>

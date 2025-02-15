@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Escape Room - Level 1</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #1a1a2e;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        img {
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            width: 200px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #e94560;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #ff2e63;
+        }
+        #hint {
+            margin-top: 10px;
+            font-style: italic;
+            color: #ffcccb;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Virtual Escape Room 🔐</h1>
+        <h2>Level 1: Solve the Riddle</h2>
+        <p>What has keys but can't open locks?</p>
+        <input type="text" id="answer" placeholder="Enter answer">
+        <button onclick="checkAnswer()">Submit</button>
+        <p id="hint"></p>
+    </div>
+    
+    <script>
+        function checkAnswer() {
+            let userAnswer = document.getElementById("answer").value.toLowerCase();
+            if (userAnswer === "keyboard") {
+                alert("Correct! Moving to the next level.");
+                window.location.href = "Memory1.html";
+            } else {
+                document.getElementById("hint").innerText = "Try again!";
+            }
+        }
+    </script>
+</body>
+</html>

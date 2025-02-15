@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memory 2</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #1a1a2e;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        img {
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .funny-text {
+            font-size: 18px;
+            font-style: italic;
+            color: #ffcccb;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #e94560;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #ff2e63;
+        }
+        .date {
+            font-size: 16px;
+            color: #ff2e63;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>😂 Haha! Look at This! 😂</h1>
+        <p class="date">📅 9 Feb 24</p>
+        <img src="C:\Users\jiyar\Downloads\WhatsApp Image 2025-02-14 at 17.15.08_8135fdbf.jpg" alt="Funny Memory">
+        <p class="funny-text">Wait... is that a cactus or your long-lost twin? 🌵😂<br> This moment is too legendary to forget!</p>
+        <button onclick="nextLevel()">Go to Level 3 🚀</button>
+    </div>
+
+    <script>
+        function nextLevel() {
+            window.location.href = "Level3.html";
+        }
+    </script>
+</body>
+</html>

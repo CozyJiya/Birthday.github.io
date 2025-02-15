@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Escape Room - Level 2</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #1a1a2e;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        .number-btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px;
+            font-size: 20px;
+            background-color: #e94560;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .number-btn:hover {
+            background-color: #ff2e63;
+        }
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #ffcccb;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 Unlock the Code! 🔒</h1>
+        <p>Click the numbers in the correct order (ascending) to proceed.</p>
+        
+        <div id="number-container"></div>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        let correctOrder = ["4", "6", "13", "18", "24"];
+        let clickedOrder = [];
+        
+        function createNumbers() {
+            let numbers = [...correctOrder];
+            numbers.sort(() => Math.random() - 0.5); // Shuffle numbers
+
+            let container = document.getElementById("number-container");
+            numbers.forEach(num => {
+                let btn = document.createElement("button");
+                btn.innerText = num;
+                btn.className = "number-btn";
+                btn.onclick = () => checkNumber(num, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkNumber(num, btn) {
+            clickedOrder.push(num);
+            btn.style.backgroundColor = "#00c853"; // Green when clicked
+            btn.disabled = true;
+
+            if (clickedOrder.length === correctOrder.length) {
+                if (JSON.stringify(clickedOrder) === JSON.stringify(correctOrder)) {
+                    document.getElementById("message").innerHTML = "✅ Correct! Moving to next level...";
+                    setTimeout(() => {
+                        window.location.href = "Memory2.html";
+                    }, 1000);
+                } else {
+                    document.getElementById("message").innerHTML = "❌ Wrong order! Refresh to try again.";
+                }
+            }
+        }
+
+        createNumbers();
+    </script>
+</body>
+</html>

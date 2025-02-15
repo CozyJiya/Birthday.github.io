@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Level 6: Extreme Maze Challenge! 🔥</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: white;
+        }
+        canvas {
+            background: black;
+            display: block;
+            margin: auto;
+            border: 3px solid #fff;
+        }
+        #winScreen, #loseScreen {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        button {
+            padding: 14px 28px;
+            border: none;
+            background-color: #e94560;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #ff2e63;
+        }
+        #timer {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 Level 6: Extreme Maze Challenge! 🔥</h1>
+    <p>Escape before time runs out and avoid the guards!</p>
+    <p id="timer">Time Left: <span id="time">30</span> sec</p>
+    <canvas id="mazeCanvas" width="640" height="600"></canvas>
+
+    <div id="winScreen">
+        <h1>🎉 YOU ESCAPED! 🎉</h1>
+        <p>Great job! You found your way out!</p>
+        <button onclick="goToNextLevel()">Next Level ➡️</button>
+    </div>
+
+    <div id="loseScreen">
+        <h1>💀 YOU LOST! 💀</h1>
+        <p>Time ran out or you got caught!</p>
+        <button onclick="restartGame()">Try Again 🔄</button>
+    </div>
+
+    <script>
+        let canvas = document.getElementById("mazeCanvas");
+        let ctx = canvas.getContext("2d");
+
+        let maze = [
+            "1111111111111111",
+            "1000000000000001",
+            "1011111111111101",
+            "1010000010000101",
+            "1010111010110101",
+            "1010001000100001",
+            "1011101110111101",
+            "1000101000100001",
+            "1110101010111111",
+            "1000100000000101",
+            "1010111011100101",
+            "1010001000000101",
+            "1011111110111101",
+            "1000000010000001",
+            "1111111111111111"
+        ];
+
+        let cellSize = 40;
+        let player = { x: 1, y: 1 };
+        let exit = { x: 14, y: 13 };
+
+        let playerImg = new Image();
+        playerImg.src = "file:///C:/Users/jiyar/Downloads/level6-removebg-preview.png"; // Replace with your player image
+
+        let enemyImg = new Image();
+        enemyImg.src = "https://i.pinimg.com/736x/2d/39/a5/2d39a5dc82c7daa18282c2ba38ec17f9.jpg"; // Replace with your enemy image
+
+        let enemies = [
+            { x: 6, y: 6, direction: 1, speed: 0.5 },
+            { x: 10, y: 10, direction: -1, speed: 0.6 }
+        ];
+
+        let timeLeft = 30;
+        let timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById("time").innerText = timeLeft;
+            if (timeLeft <= 0) endGame(false);
+        }, 1000);
+
+        function drawMaze() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < maze.length; i++) {
+                for (let j = 0; j < maze[i].length; j++) {
+                    if (maze[i][j] === "1") {
+                        ctx.fillStyle = "white";
+                        ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+                    }
+                }
+            }
+            drawExit();
+            drawPlayer();
+            drawEnemies();
+        }
+
+        function drawPlayer() {
+            ctx.drawImage(playerImg, player.x * cellSize + 5, player.y * cellSize + 5, cellSize - 10, cellSize - 10);
+        }
+
+        function drawExit() {
+            ctx.fillStyle = "limegreen";
+            ctx.fillRect(exit.x * cellSize + 5, exit.y * cellSize + 5, cellSize - 10, cellSize - 10);
+        }
+
+        function drawEnemies() {
+            enemies.forEach(enemy => {
+                ctx.drawImage(enemyImg, enemy.x * cellSize + 5, enemy.y * cellSize + 5, cellSize - 10, cellSize - 10);
+            });
+        }
+
+        function moveEnemies() {
+            enemies.forEach(enemy => {
+                let newY = enemy.y + enemy.direction * enemy.speed;
+                if (maze[Math.round(newY)][enemy.x] === "0") {
+                    enemy.y = newY;
+                } else {
+                    enemy.direction *= -1;
+                }
+                if (Math.round(player.x) === enemy.x && Math.round(player.y) === enemy.y) {
+                    endGame(false);
+                }
+            });
+            drawMaze();
+        }
+
+        setInterval(moveEnemies, 700);
+
+        document.addEventListener("keydown", (e) => {
+            let newX = player.x;
+            let newY = player.y;
+            if (e.key === "ArrowUp") newY--;
+            if (e.key === "ArrowDown") newY++;
+            if (e.key === "ArrowLeft") newX--;
+            if (e.key === "ArrowRight") newX++;
+
+            if (maze[newY] && maze[newY][newX] === "0") {  
+                player.x = newX;
+                player.y = newY;
+            }
+
+            if (player.x === exit.x && player.y === exit.y) {
+                endGame(true);
+            }
+            drawMaze();
+        });
+
+        function endGame(won) {
+            clearInterval(timer);
+            if (won) {
+                document.getElementById("winScreen").style.display = "block";
+            } else {
+                document.getElementById("loseScreen").style.display = "block";
+            }
+        }
+
+        function goToNextLevel() {
+            window.location.href = "Memory6.html";
+        }
+
+        function restartGame() {
+            window.location.reload();
+        }
+
+        drawMaze();
+    </script>
+</body>
+</html>

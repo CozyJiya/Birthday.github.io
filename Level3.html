@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Escape Room - Level 3</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #1a1a2e;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        .images {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .images img {
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        input {
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            width: 200px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #e94560;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #ff2e63;
+        }
+        #message {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Spot the Difference! 🔍</h1>
+        <p> Can you find them?</p>
+        
+        <div class="images">
+            <img src="C:\Users\jiyar\Downloads\WhatsApp Image 2025-02-14 at 17.15.09_514dbf05.jpg" alt="Original Image">
+            <img src="C:\Users\jiyar\Downloads\2f8d849b9430bfb31b59301750aa576f.jpg" alt="Edited Image">
+        </div>
+
+        <p>Type the number of differences you found:</p>
+        <input type="number" id="answer" placeholder="Enter number">
+        <button onclick="checkAnswer()">Submit</button>
+
+        <p id="message"></p>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            let userAnswer = document.getElementById("answer").value;
+            let message = document.getElementById("message");
+
+            if (userAnswer == "0") {
+                message.innerHTML = "✅ Correct! You found all the differences!";
+                setTimeout(() => {
+                    window.location.href = "Memory3.html"; 
+                }, 2000);
+            } else {
+                message.innerHTML = "❌ Nope! Try again.";
+            }
+        }
+    </script>
+</body>
+</html>

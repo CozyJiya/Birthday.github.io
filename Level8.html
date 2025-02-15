@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ Samurai Reflex - Level 8</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            background-color: black;
+            color: white;
+        }
+        #gameScreen {
+            font-size: 28px;
+            padding: 50px;
+            border: 3px solid white;
+            display: inline-block;
+            margin-top: 50px;
+            background: darkred;
+        }
+        button {
+            padding: 14px 28px;
+            border: none;
+            background-color: #ff5733;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #ff2e63;
+        }
+    </style>
+</head>
+<body>
+    <h1>⚔️ Samurai Reflex - Level 8</h1>
+    <p>Wait for the signal... then **CLICK FAST** to attack before the enemy!</p>
+
+    <div id="gameScreen">⚔️ Waiting...</div>
+
+    <div id="winScreen" style="display: none;">
+        <h1>🎉 YOU WON! 🎉</h1>
+        <p>Excellent reflexes, Samurai!</p>
+        <button onclick="nextMemory()">Next Memory ➡️</button>
+    </div>
+
+    <div id="loseScreen" style="display: none;">
+        <h1>💀 GAME OVER! 💀</h1>
+        <p>Too slow! The enemy got you...</p>
+        <button onclick="restartGame()">Retry 🔄</button>
+    </div>
+
+    <script>
+        let gameScreen = document.getElementById("gameScreen");
+        let reactionTime;
+        let gameStarted = false;
+        
+        function startGame() {
+            gameScreen.innerText = "⚔️ Get Ready...";
+            let randomTime = Math.floor(Math.random() * 3000) + 2000;
+            
+            setTimeout(() => {
+                gameScreen.innerText = "⚔️ ATTACK!";
+                reactionTime = Date.now();
+                gameStarted = true;
+            }, randomTime);
+        }
+
+        document.addEventListener("click", () => {
+            if (gameStarted) {
+                let timeTaken = Date.now() - reactionTime;
+                if (timeTaken < 600) {
+                    document.getElementById("winScreen").style.display = "block";
+                } else {
+                    document.getElementById("loseScreen").style.display = "block";
+                }
+                gameScreen.style.display = "none";
+            }
+        });
+
+        function nextMemory() {
+            window.location.href = "Memory8.html";
+        }
+
+        function restartGame() {
+            window.location.reload();
+        }
+
+        startGame();
+    </script>
+</body>
+</html>

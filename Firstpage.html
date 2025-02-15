@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to the Escape Room</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #1a1a2e;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        img {
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #e94560;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #ff2e63;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Hey Birthday Boy! 🎉</h1>
+        <img src="C:\Users\jiyar\Downloads\WhatsApp Image 2025-02-14 at 17.11.29_8166599e.jpg" alt="Funny Picture">
+        <h2>Are you ready for some games?</h2>
+        <p>Click below to continue! Each level will show you a memory. 🎮</p>
+        <button onclick="startGame()">Start Game</button>
+    </div>
+    
+    <script>
+        function startGame() {
+            window.location.href = "level1.html";
+        }
+    </script>
+</body>
+</html>
